@@ -1,0 +1,33 @@
+#!/bin/env ruby
+#This is a simple logging program. For logging short messages and notes in a .notes file
+#
+
+notes_file_name = "little-notes.md"
+notes_file_path = ".#{notes_file_name}"
+
+title = ARGV.empty? ? "UNTITLED" : ARGV.join(" ")
+time = Time.new
+temp_file_path = "new-file-#{Random.rand}.md"
+temp_file = File.new temp_file_path, "w"
+temp_file.close
+system("vim #{temp_file_path}")
+note = File.read temp_file_path
+%x(rm "#{temp_file_path}")
+
+Dir.chdir ENV['HOME']
+
+unless File.exists?(notes_file_path)
+  f = File.new notes_file_path, "w"
+  f.close
+end
+
+open(notes_file_path, 'a') do |f|
+  f.puts "####{title}\n\n"
+  f.puts "*#{time.to_s}*\n\n"
+  f.puts note
+  f.puts "\n\n"
+  f.puts "***"
+  f.puts "\n\n"
+end
+
+#binding.pry

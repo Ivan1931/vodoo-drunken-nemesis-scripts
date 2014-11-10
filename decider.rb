@@ -9,7 +9,7 @@ def convert_to_hash(options)
 end
 
 def decide(trials, options)
-  puts "Deciding how with the following options #{options.inspect}"
+  puts "Deciding with the following options #{options.inspect} for #{trials} trials"
   option_frequency = convert_to_hash(options)
   trials.to_i.times do
     option_frequency[options.sample] += 1
